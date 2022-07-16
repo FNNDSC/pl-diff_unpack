@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 from unittest.mock import call
 
-from app import parser, main, DISPLAY_TITLE
+from diff_unpack import parser, main, DISPLAY_TITLE
 
 
 def test_main(mocker, tmp_path: Path):

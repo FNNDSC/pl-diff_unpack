@@ -1,19 +1,19 @@
 from setuptools import setup
 
 setup(
-    name='chris-plugin-template',
+    name='diff_unpack',
     version='1.0.0',
-    description='A ChRIS DS plugin template',
+    description='A ChRIS DS plugin that is a thin wrapper about diff_unpack (part of TrackVis, original author Ruopeng Wang)',
     author='FNNDSC',
-    author_email='dev@babyMRI.org',
-    url='https://github.com/FNNDSC/python-chrisapp-template',
-    py_modules=['app'],
+    author_email='rudolph.pienaar@childrens.harvard.edu',
+    url='https://github.com/FNNDSC/pl-diff_un',
+    py_modules=['diff_unpack'],
     install_requires=['chris_plugin'],
     license='MIT',
     python_requires='>=3.8.2',
     entry_points={
         'console_scripts': [
-            'commandname = app:main'
+            'diff_unpack = diff_unpack:main'
         ]
     },
     classifiers=[
