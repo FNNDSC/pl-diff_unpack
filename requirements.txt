@@ -1,1 +1,3 @@
 chris_plugin==0.1.1
+pfmisc
+pudb
