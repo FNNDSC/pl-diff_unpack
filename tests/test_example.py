@@ -55,7 +55,7 @@ def test_main(mocker, tmp_path: Path):
 
     mock_print  = mocker.patch('builtins.print')
     main(options, inputdir, outputdir)
-    # mock_print.assert_has_calls([call(DISPLAY_TITLE)])
+    # mock_print.assert_has_calls([call(DISPLAY_TITLE), call("Option ")])
 
     expected_output_file = outputdir / 'success.txt'
     # assert expected_output_file.exists()
