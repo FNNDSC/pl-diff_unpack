@@ -5,7 +5,7 @@
 [![ci](https://github.com/FNNDSC/pl-diff_unpack/actions/workflows/ci.yml/badge.svg)](https://github.com/FNNDSC/pl-diff_unpack/actions/workflows/ci.yml)
 
 `pl-diff_unpack` is a [_ChRIS_](https://chrisproject.org/)
-_ds_ plugin which about the Diffusion Toolkit app `diff_unpack` which consumes DICOMs as input files and creates NIfTI or Analyze conversions as output files.
+_ds_ plugin that wraps around the Diffusion Toolkit app `diff_unpack`. This app consumes DICOMs as input files and creates NIfTI or Analyze conversions as output files. The ChRIS plugin version effectively extends the original app to operate across multiple directory spaces.
 
 ## Abstract
 
