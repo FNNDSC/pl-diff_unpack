@@ -182,8 +182,13 @@ def diff_unpack(options: Namespace, inputfile: Path, outputdir: Path) -> dict:
     min_gpu_limit       = 0                 # set min_gpu_limit=1 to enable GPU
 )
 def main(options: Namespace, inputdir: Path, outputdir: Path):
-    global cloptions
-    cloptions = options
+    """Main entry point for module
+
+    Args:
+        options (Namespace): The CLI option space
+        inputdir (Path): The ChRIS inputdir
+        outputdir (Path): The ChRIS ouputdir
+    """
     print(DISPLAY_TITLE, file=sys.stderr)
     ld_result   : list  = []
     if start.init(options, inputdir, outputdir)['isOK']:
