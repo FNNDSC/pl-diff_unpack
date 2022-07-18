@@ -5,7 +5,7 @@ import  pudb
 from diff_unpack import parser, inputDir2File_do, main, DISPLAY_TITLE
 
 
-options         = parser.parse_args(['--inputFilter', 'dcm'])
+options         = parser.parse_args(['--inputFilter', '*dcm'])
 
 
 def test_inputDir2File_do_skips_dirs_without_hits(tmp_path: Path):
@@ -25,7 +25,7 @@ def test_inputDir2File_do_returns_a_dicom(tmp_path: Path):
     outputdir   = tmp_path / 'outputdir'
     inputdir.mkdir()
     outputdir.mkdir()
-    pudb.set_trace()
+    # pudb.set_trace()  # doesn't work with pytest
     # create example data
     dicoms = {
         inputdir / 'file1.dcm',
