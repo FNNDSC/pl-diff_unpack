@@ -6,7 +6,7 @@ setup(
     description='A ChRIS DS plugin that is a thin wrapper about diff_unpack (part of TrackVis, original author Ruopeng Wang)',
     author='FNNDSC',
     author_email='rudolph.pienaar@childrens.harvard.edu',
-    url='https://github.com/FNNDSC/pl-diff_un',
+    url='https://github.com/FNNDSC/pl-diff_unpack',
     py_modules=['diff_unpack'],
     install_requires=['chris_plugin'],
     license='MIT',
