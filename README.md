@@ -84,7 +84,7 @@ docker run --rm localhost/fnndsc/pl-diff_unpack chris_plugin_info > chris_plugin
 
 ### Local Test Run
 
-Mount the source code `diff_unpack.py` into a container to test changes without rebuild.
+Mount the source code `diff_unpack.py` into a container to try out changes without rebuild.
 
 ```shell
 docker run --rm -it --userns=host -u $(id -u):$(id -g) \
@@ -93,6 +93,17 @@ docker run --rm -it --userns=host -u $(id -u):$(id -g) \
     -v $PWD/job:/usr/local/lib/python3.10/site-packages/job:ro \
     -v $PWD/in:/incoming:ro -v $PWD/out:/outgoing:rw -w /outgoing \
     localhost/fnndsc/pl-diff_unpack diff_unpack /incoming /outgoing
+```
+
+### Testing
+
+Run unit tests using `pytest`.
+It's recommended to rebuild the image to ensure that sources are up-to-date.
+Use the option `--build-arg extras_require=dev` to install extra dependencies for testing.
+
+```shell
+docker build -t localhost/fnndsc/pl-diff_unpack:dev --build-arg extras_require=dev .
+docker run --rm -it localhost/fnndsc/pl-diff_unpack:dev pytest
 ```
 
 _-30-_
