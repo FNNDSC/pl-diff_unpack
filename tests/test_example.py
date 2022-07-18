@@ -4,6 +4,15 @@ from unittest.mock import call
 import  pudb
 from diff_unpack import parser, inputDir2File_do, main, DISPLAY_TITLE
 
+str_notes = '''
+
+    Some tests for diff_unpack.py. Note, if you want to debug tests
+    with `pudb`, make sure to
+
+        pytest -s
+
+'''
+
 
 options         = parser.parse_args(['--inputFilter', '*dcm'])
 
@@ -25,7 +34,6 @@ def test_inputDir2File_do_returns_a_dicom(tmp_path: Path):
     outputdir   = tmp_path / 'outputdir'
     inputdir.mkdir()
     outputdir.mkdir()
-    # pudb.set_trace()  # doesn't work with pytest
     # create example data
     dicoms = {
         inputdir / 'file1.dcm',
