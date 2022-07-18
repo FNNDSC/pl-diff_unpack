@@ -97,39 +97,44 @@ class Jobber:
         """
         d_ret       : dict = {
             'stdout':       "",
-            'stderr':       "",
-            'cmd':          "",
+            'stderr':       "Command not found",
+            'cmd':          str_cmd,
             'cwd':          "",
-            'returncode':   0
+            'returncode':   1
         }
+        b_popenOK       : bool  = True
         str_stdoutLine  : str   = ""
         str_stdout      : str   = ""
 
-        p = subprocess.Popen(
+        try:
+            p = subprocess.Popen(
                     str_cmd.split(),
                     stdout      = subprocess.PIPE,
                     stderr      = subprocess.PIPE,
-        )
+            )
+        except:
+            b_popenOK   = False
 
-        # Realtime output on stdout
-        while True:
-            stdout      = p.stdout.readline()
-            if p.poll() is not None:
-                break
-            if stdout:
-                str_stdoutLine = stdout.decode()
-                if int(self.args['verbosity']):
-                    print(str_stdoutLine, end = '')
-                str_stdout      += str_stdoutLine
-        d_ret['cmd']        = str_cmd
-        d_ret['cwd']        = os.getcwd()
-        d_ret['stdout']     = str_stdout
-        d_ret['stderr']     = p.stderr.read().decode()
-        d_ret['returncode'] = p.returncode
-        with open('/tmp/job.json', 'w') as f:
-            json.dump(d_ret, f, indent=4)
-        if int(self.args['verbosity']) and len(d_ret['stderr']):
-            print('\nstderr: \n%s' % d_ret['stderr'])
+        if b_popenOK:
+            # Realtime output on stdout
+            while True:
+                stdout      = p.stdout.readline()
+                if p.poll() is not None:
+                    break
+                if stdout:
+                    str_stdoutLine = stdout.decode()
+                    if int(self.args['verbosity']):
+                        print(str_stdoutLine, end = '')
+                    str_stdout      += str_stdoutLine
+            d_ret['cmd']        = str_cmd
+            d_ret['cwd']        = os.getcwd()
+            d_ret['stdout']     = str_stdout
+            d_ret['stderr']     = p.stderr.read().decode()
+            d_ret['returncode'] = p.returncode
+            with open('/tmp/job.json', 'w') as f:
+                json.dump(d_ret, f, indent=4)
+            if int(self.args['verbosity']) and len(d_ret['stderr']):
+                print('\nstderr: \n%s' % d_ret['stderr'])
         return d_ret
 
     def job_runbg(self, str_cmd : str) -> dict:
