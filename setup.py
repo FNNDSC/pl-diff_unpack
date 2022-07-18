@@ -11,6 +11,7 @@ setup(
     install_requires=['chris_plugin'],
     license='MIT',
     python_requires='>=3.8.2',
+    packages=['init', 'job'],
     entry_points={
         'console_scripts': [
             'diff_unpack = diff_unpack:main'
