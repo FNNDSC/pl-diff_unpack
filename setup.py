@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='diff_unpack',
-    version='1.1.0',
+    version='1.1.1',
     description='A ChRIS DS plugin that is a thin wrapper about diff_unpack (part of TrackVis, original author Ruopeng Wang)',
     author='FNNDSC',
     author_email='rudolph.pienaar@childrens.harvard.edu',
