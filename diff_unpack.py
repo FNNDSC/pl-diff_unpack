@@ -7,6 +7,7 @@ from    typing                  import Iterator, Optional
 
 from    chris_plugin            import chris_plugin, PathMapper
 import  itertools
+import  json
 
 __pkg       = Distribution.from_name(__package__)
 __version__ = __pkg.version
@@ -59,6 +60,19 @@ parser.add_argument(
         '''
 )
 parser.add_argument(
+        '--bin',
+        default     = '/usr/local/src/pl-diff_unpack/dtk/diff_unpack',
+        help        = '''
+        The Diffusion Toolkit binary to execute. The default location of
+
+        /usr/local/src/pl-diff_unpack/diff_unpack
+
+        represents the in-container location. If running elsewhere, say
+        on the metal, specify the location of your `diff_unpack` using this
+        flag.
+        '''
+)
+parser.add_argument(
         '--split',
         default     = False,
         help        = '''
@@ -85,9 +99,9 @@ parser.add_argument(
                         '''
 )
 parser.add_argument(
-                        '-v', '--verbosity',
-                        default = '0',
-                        help    = 'verbosity level of app'
+        '-v', '--verbosity',
+        default = '0',
+        help    = 'verbosity level of app'
 )
 
 def inputDir2File_do(options : Namespace, t: tuple[Path, Path]) -> Optional[tuple[Path, Path]]:
@@ -126,9 +140,6 @@ def inputFileFilter_do(options : Namespace, mapper: PathMapper) -> Iterator[tupl
     Yields:
         Iterator[tuple[Path, Path]]: the posix mapper
     """
-    # globs   = ((i.glob("*dcm"), o) for i, o in mapper)
-    # firsts  = ((next(g, None), o) for g, o in globs)
-    # return filter(lambda t: t[0] is not None, firsts)
     return filter(
         lambda t: t is not None,
         map(inputDir2File_do, itertools.repeat(options), mapper)
@@ -155,7 +166,7 @@ def diff_unpack(options: Namespace, inputfile: Path, outputdir: Path) -> dict:
     if options.split: l_cliArgs.append('--split')
     # targetInput     : Path  = next(inputdir.glob(options.inputFilter))
     str_cliArgs     : str   = ' '.join(l_cliArgs)
-    str_cliArgs             = '/usr/local/src/pl-diff_unpack/dtk/diff_unpack ' + str_cliArgs
+    str_cliArgs             = options.bin + ' ' + str_cliArgs
     str_cliArgs            += ' ' + str(inputfile) + ' ' + str(outputdir)
 
     return shell.job_run(str_cliArgs)
@@ -180,6 +191,9 @@ def main(options: Namespace, inputdir: Path, outputdir: Path):
         file_mapper = inputFileFilter_do(options, dir_mapper)
         for inputfile, outputdir in file_mapper:
             ld_result.append(diff_unpack(options, inputfile, outputdir))
+
+    if options.verbosity == "2":
+        start.LOG(json.dumps(ld_result, indent = 4))
 
 
 if __name__ == '__main__':
